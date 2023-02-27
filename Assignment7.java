@@ -1,4 +1,4 @@
-// Assignment: 
+// Assignment: 7
 // Name: Jaden Figger
 // StudentID: 1225024528
 // Lecture: 1:30
@@ -78,6 +78,12 @@ public class Assignment7 {
                          * If the review has been added successfully, show *
                          * "Movie added to the database!\n" on screen, otherwise "Movie NOT added!\n" *
                          **********************************************************************/
+                        if (reviewManager.addReview(movieName, rating, review, totalCollection, movieGenre, director,
+                                productionCompany)) {
+                            System.out.print("Movie added to the database!\n");
+                        } else {
+                            System.out.print("Movie NOT added!\n");
+                        }
 
                     case 'D': // Search for a movie
                         System.out.print("Please enter the Movie name to search:\n");
@@ -90,6 +96,14 @@ public class Assignment7 {
                          * "Movie found. Here's the review:\n" *
                          * Otherwise, print "Movie not found. Please try again\n" *
                          **********************************************************************/
+                        int movieIndex = reviewManager.movieExists(movieName, director);
+                        if (movieIndex != -1) {
+                            System.out.print("Movie found. Here's the review:\n");
+                            System.out.print(reviewManager.getMovie(movieIndex).toString());
+                        } else {
+                            System.out.print("Movie not found. Please try again\n");
+                        }
+                        break;
 
                     case 'E': // Search for a Movie Genre
                         System.out.print("Please enter the movie genre to search:\n");
@@ -101,6 +115,16 @@ public class Assignment7 {
                          * "%s Movies matching %s type were found:\n" followed by the reviews. *
                          * Otherwise, print "Movie Genre: %s was NOT found\n" *
                          ******************************************************************************/
+                        ArrayList<Integer> movieGenreIndicies = reviewManager.movieGenreExists(movieGenre);
+                        if (movieGenreIndicies.size() > 0) {
+                            System.out.printf("%s Movies matching %s type were found:\n", movieGenreIndicies.size(),
+                                    movieGenre);
+                            for (int i : movieGenreIndicies) {
+                                reviewManager.getMovie(i).toString();
+                            }
+                        } else {
+                            System.out.printf("Movie Genre: %s was NOT found\n", movieGenre);
+                        }
 
                     case 'L': // List movie's reviews
                         System.out.print("\n" + reviewManager.listReviews() + "\n");
