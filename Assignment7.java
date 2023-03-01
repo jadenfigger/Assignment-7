@@ -84,6 +84,7 @@ public class Assignment7 {
                         } else {
                             System.out.print("Movie NOT added!\n");
                         }
+                        break;
 
                     case 'D': // Search for a movie
                         System.out.print("Please enter the Movie name to search:\n");
@@ -125,8 +126,11 @@ public class Assignment7 {
                         } else {
                             System.out.printf("Movie Genre: %s was NOT found\n", movieGenre);
                         }
+                        break;
+
 
                     case 'L': // List movie's reviews
+                        reviewManager.sortByRating();
                         System.out.print("\n" + reviewManager.listReviews() + "\n");
                         break;
 
