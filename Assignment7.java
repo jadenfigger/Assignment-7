@@ -40,27 +40,27 @@ public class Assignment7 {
         ReviewManager reviewManager = new ReviewManager();
 
         // Random rand = new Random();
-        // int l = 5;
+        // int l = 50000;
         // for (int i = 0; i < l; i++) {
-        // reviewManager.reviewList.add(
-        // new Movie("f", rand.nextInt(50), "review4", 5, "director", new
-        // MovieGenre("action", "company1")));
+        //     reviewManager.reviewList.add(
+        //     new Movie("f", rand.nextInt(50), "review4", 5, "director", new
+        //     MovieGenre("action", "company1")));
         // }
 
+        reviewManager.reviewList.add(
+                new Movie("b", 1, "review4", 1, "director", new MovieGenre("action",
+                        "company1")));
         reviewManager.reviewList.add(
                 new Movie("s", 1, "review4", 1, "director", new MovieGenre("action",
                         "company1")));
         reviewManager.reviewList.add(
-                new Movie("s", 2, "review4", 1, "director", new MovieGenre("action",
+                new Movie("l", 1, "review4", 5, "director", new MovieGenre("action",
                         "company1")));
         reviewManager.reviewList.add(
                 new Movie("s", 1, "review4", 5, "director", new MovieGenre("action",
                         "company1")));
         reviewManager.reviewList.add(
-                new Movie("s", 3, "review4", 5, "director", new MovieGenre("action",
-                        "company1")));
-        reviewManager.reviewList.add(
-                new Movie("s", 4, "review4", 5, "director", new MovieGenre("action",
+                new Movie("g", 1, "review4", 5, "director", new MovieGenre("action",
                         "company1")));
 
         long startTime = System.nanoTime();

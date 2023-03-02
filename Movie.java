@@ -59,8 +59,8 @@ public class Movie implements Serializable {
         // movieGenre.toString() + "Director: " + director + "\n" +
         // "Review:\t" + review + "\n\n";
         // return result;
-        String result = String.valueOf(stars);
-        result += ":" + movieName + "  ";
+        String result = movieName + ",";
+        // result += ":" + movieName + "  ";
 
         return result;
     }
