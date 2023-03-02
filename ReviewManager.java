@@ -90,8 +90,8 @@ public class ReviewManager implements Serializable {
     // lists out all the reviews in review list
     public String listReviews() {
         String result = "";
-        for (Movie review : reviewList) {
-            result += review.toString();
+        for (int i = 0; i < reviewList.size(); i++) {
+            result += reviewList.get(i).toString();
         }
         return result;
     }

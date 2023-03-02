@@ -1,6 +1,6 @@
 import java.util.Comparator;
 
-public class ReviewRatingComparator implements Comparator<Movie>{
+public class ReviewRatingComparator implements Comparator<Movie> {
 	public int compare(Movie first, Movie second) {
 
 		// 1) compare star rating values
@@ -14,9 +14,10 @@ public class ReviewRatingComparator implements Comparator<Movie>{
 		compareValue = second.movieName.compareTo(first.movieName);
 
 		// if the movie names aren't equal
-		if (compareValue == 0) {
+		if (compareValue != 0) {
 			return compareValue;
 		}
+
 		// 3) compare the director names
 		compareValue = second.director.compareTo(first.director);
 

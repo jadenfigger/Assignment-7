@@ -21,6 +21,7 @@ import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Assignment7 {
     public static void main(String[] args) {
@@ -37,6 +38,26 @@ public class Assignment7 {
         String outMsg, inMsg;
         // Movie manager
         ReviewManager reviewManager = new ReviewManager();
+
+        // Random rand = new Random();
+        // int l = 5;
+        // for (int i = 0; i < l; i++) {
+        // reviewManager.reviewList.add(
+        // new Movie("f", rand.nextInt(l), "review4", 5, "director", new
+        // MovieGenre("action", "company1")));
+        // }
+
+        reviewManager.reviewList.add(
+                new Movie("s", 1, "review4", 1, "director", new MovieGenre("action", "company1")));
+        reviewManager.reviewList.add(
+                new Movie("b", 1, "review4", 1, "director", new MovieGenre("action", "company1")));
+        reviewManager.reviewList.add(
+                new Movie("c", 1, "review4", 5, "director", new MovieGenre("action", "company1")));
+        reviewManager.reviewList.add(
+                new Movie("j", 1, "review4", 5, "director", new MovieGenre("action", "company1")));
+        reviewManager.reviewList.add(
+                new Movie("r", 1, "review4", 5, "director", new MovieGenre("action", "company1")));
+
         // Operation result
         boolean opResult;
 
@@ -128,8 +149,8 @@ public class Assignment7 {
                         }
                         break;
 
-
                     case 'L': // List movie's reviews
+                        System.out.print("\n" + reviewManager.listReviews() + "\n");
                         reviewManager.sortByRating();
                         System.out.print("\n" + reviewManager.listReviews() + "\n");
                         break;
