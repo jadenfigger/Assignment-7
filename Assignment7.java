@@ -43,26 +43,40 @@ public class Assignment7 {
         // int l = 5;
         // for (int i = 0; i < l; i++) {
         // reviewManager.reviewList.add(
-        // new Movie("f", rand.nextInt(l), "review4", 5, "director", new
+        // new Movie("f", rand.nextInt(50), "review4", 5, "director", new
         // MovieGenre("action", "company1")));
         // }
 
         reviewManager.reviewList.add(
-                new Movie("s", 1, "review4", 1, "director", new MovieGenre("action", "company1")));
+                new Movie("s", 1, "review4", 1, "director", new MovieGenre("action",
+                        "company1")));
         reviewManager.reviewList.add(
-                new Movie("b", 1, "review4", 1, "director", new MovieGenre("action", "company1")));
+                new Movie("s", 2, "review4", 1, "director", new MovieGenre("action",
+                        "company1")));
         reviewManager.reviewList.add(
-                new Movie("c", 1, "review4", 5, "director", new MovieGenre("action", "company1")));
+                new Movie("s", 1, "review4", 5, "director", new MovieGenre("action",
+                        "company1")));
         reviewManager.reviewList.add(
-                new Movie("j", 1, "review4", 5, "director", new MovieGenre("action", "company1")));
+                new Movie("s", 3, "review4", 5, "director", new MovieGenre("action",
+                        "company1")));
         reviewManager.reviewList.add(
-                new Movie("r", 1, "review4", 5, "director", new MovieGenre("action", "company1")));
+                new Movie("s", 4, "review4", 5, "director", new MovieGenre("action",
+                        "company1")));
+
+        long startTime = System.nanoTime();
+        System.out.print("\n" + reviewManager.listReviews() + "\n");
+        reviewManager.sortByRating();
+        System.out.print("\n" + reviewManager.listReviews() + "\n");
+        long endTime = System.nanoTime();
+
+        long duration = (endTime - startTime);
+        System.out.println(duration / 1000000.0);
 
         // Operation result
         boolean opResult;
 
         try {
-            printMenu();
+            // printMenu();
             InputStreamReader isr = new InputStreamReader(System.in);
             BufferedReader stdin = new BufferedReader(isr);
 
