@@ -20,8 +20,11 @@ import java.io.InputStreamReader;
 import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.FileSystemNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.zip.DataFormatException;
 
 public class Assignment7 {
     public static void main(String[] args) {
@@ -39,39 +42,6 @@ public class Assignment7 {
         // Movie manager
         ReviewManager reviewManager = new ReviewManager();
 
-        // Random rand = new Random();
-        // int l = 50000;
-        // for (int i = 0; i < l; i++) {
-        //     reviewManager.reviewList.add(
-        //     new Movie("f", rand.nextInt(50), "review4", 5, "director", new
-        //     MovieGenre("action", "company1")));
-        // }
-
-        reviewManager.reviewList.add(
-                new Movie("b", 1, "review4", 1, "director", new MovieGenre("action",
-                        "company1")));
-        reviewManager.reviewList.add(
-                new Movie("s", 1, "review4", 1, "director", new MovieGenre("action",
-                        "company1")));
-        reviewManager.reviewList.add(
-                new Movie("l", 1, "review4", 5, "director", new MovieGenre("action",
-                        "company1")));
-        reviewManager.reviewList.add(
-                new Movie("s", 1, "review4", 5, "director", new MovieGenre("action",
-                        "company1")));
-        reviewManager.reviewList.add(
-                new Movie("g", 1, "review4", 5, "director", new MovieGenre("action",
-                        "company1")));
-
-        long startTime = System.nanoTime();
-        System.out.print("\n" + reviewManager.listReviews() + "\n");
-        reviewManager.sortByRating();
-        System.out.print("\n" + reviewManager.listReviews() + "\n");
-        long endTime = System.nanoTime();
-
-        long duration = (endTime - startTime);
-        System.out.println(duration / 1000000.0);
-
         // Operation result
         boolean opResult;
 
@@ -81,6 +51,7 @@ public class Assignment7 {
             BufferedReader stdin = new BufferedReader(isr);
 
             do {
+                printMenu();
                 System.out.print("\nWhat action would you like to perform?\n");
                 inputLine = stdin.readLine().trim();
                 if (inputLine.isEmpty()) {
@@ -165,16 +136,17 @@ public class Assignment7 {
 
                     case 'L': // List movie's reviews
                         System.out.print("\n" + reviewManager.listReviews() + "\n");
-                        reviewManager.sortByRating();
-                        System.out.print("\n" + reviewManager.listReviews() + "\n");
                         break;
 
-                    /******************************************************************************************
-                     * Complete the code by adding two cases: *
-                     * case 'N': sorts the movie reviews by rating and prints "sorted by rating\n" *
-                     * case 'P': sorts the movie reviews by movie genre and prints "sorted by
-                     * genre\n" *
-                     ******************************************************************************************/
+                    case 'N': // sort the review list by rating
+                        reviewManager.sortByRating();
+                        System.out.print("sorted by rating\n");
+                        break;
+
+                    case 'P': // sort the review list by genre
+                        reviewManager.sortByGenre();
+                        System.out.print("sorted by genre\n");
+                        break;
 
                     case 'Q': // Quit
                         break;
@@ -185,12 +157,8 @@ public class Assignment7 {
                         System.out.print("Please enter the name of the movie's director:\n");
                         director = stdin.readLine().trim();
 
-                        /*******************************************************************************
-                         * Complete the code. If a review for a certain movie directed by the given *
-                         * director is found, remove the review and print that it was removed.
-                         * Otherwise*
-                         * print that it was NOT removed. *
-                         *******************************************************************************/
+                        reviewManager.removeReview(movieName, director);
+                        break;
 
                     case 'T': // Close reviewList
                         reviewManager.closeReviewManager();
@@ -212,43 +180,70 @@ public class Assignment7 {
                          * Then, print in the screen that the file " is written\n" *
                          * In case of an IO Exception, print "Write string inside the file error\n" *
                          *************************************************************************************/
+                        try {
+                            FileOutputStream fos = new FileOutputStream(outFilename);
+                            ObjectOutputStream oos = new ObjectOutputStream(fos);
+                            oos.writeChars(outMsg);
+                            oos.close();
+                        } catch (IOException exception) {
+                            System.out.println("Write string inside the file error\n");
+                        }
+                        break;
 
                     case 'V': // Read strings from a text file
                         System.out.print("Please enter a file name which we will read from:\n");
                         inFilename = stdin.readLine().trim();
 
-                        /******************************************************************************************
-                         * Add a try and catch block to read from the above text file. Confirm that the
-                         * file *
-                         * " was read\n" and then print "The contents of the file are:\n" followed by
-                         * the contents *
-                         * In case of an IO Exception, print "Read string from file error\n" *
-                         * In case of a file not found exception, print that the file " was not found\n"
-                         * *
-                         ******************************************************************************************/
+                        try {
+                            FileInputStream fis = new FileInputStream(inFilename);
+                            ObjectInputStream ois = new ObjectInputStream(fis);
+                            inMsg = ois.readUTF();
+                            ois.close();
+
+                            System.out.print("The contents of the file are:\n");
+                            System.out.println(inMsg);
+
+                        } catch (FileNotFoundException exception) {
+                            System.out.print(inFilename + " was not found\n");
+                        } catch (IOException exception) {
+                            System.out.print("Read string from file error\n");
+                        }
+                        break;
 
                     case 'W': // Serialize ReviewManager to a data file
                         System.out.print("Please enter a file name to write:\n");
                         outFilename = stdin.readLine().trim();
 
-                        /****************************************************************************
-                         * Add a try and catch block to serialize ReviewManager to a data file. *
-                         * Catch two exceptions and print the corresponding messages on the screen: *
-                         * "Not serializable exception\n" *
-                         * "Data file written exception\n" *
-                         ****************************************************************************/
+                        try {
+                            FileOutputStream fos = new FileOutputStream(outFilename);
+                            ObjectOutputStream oos = new ObjectOutputStream(fos);
+                            oos.writeObject(reviewManager);
+                            oos.close();
+                        } catch (FileAlreadyExistsException exception) {
+                            System.out.println("Data file written exception\n");
+                        } catch (NotSerializableException exception) {
+                            System.out.println("Not serializable exception\n");
+                        }
+
+                        break;
 
                     case 'X': // Deserialize ReviewManager from a data file
                         System.out.print("Please enter a file name which we will read from:\n");
                         inFilename = stdin.readLine().trim();
 
-                        /*****************************************************************************
-                         * Add a try and catch block to deserialize ReviewManager from a data file. *
-                         * Catch three exceptions and print the corresponding messages on the screen:*
-                         * "Class not found exception\n" *
-                         * "Not serializable exception\n" *
-                         * "Data file read exception\n" *
-                         ****************************************************************************/
+                        try {
+                            FileInputStream fis = new FileInputStream(inFilename);
+                            ObjectInputStream ois = new ObjectInputStream(fis);
+                            reviewManager = (ReviewManager) ois.readObject();
+                            ois.close();
+                        } catch (ClassNotFoundException exception) {
+                            System.out.print("Class not found exception\n");
+                        } catch (NotSerializableException exception) {
+                            System.out.print("Not serializable exception\n");
+                        } catch (FileNotFoundException exception) {
+                            System.out.print("Data file read exception\n");
+                        }
+                        break;
 
                     case '?': // Display help
                         printMenu();

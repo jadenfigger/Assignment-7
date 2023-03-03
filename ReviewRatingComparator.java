@@ -11,7 +11,7 @@ public class ReviewRatingComparator implements Comparator<Movie> {
 			return compareValue;
 		}
 		// 2) compare the movie names
-		compareValue = second.movieName.compareTo(first.movieName);
+		compareValue = first.movieName.compareTo(second.movieName);
 
 		// if the movie names aren't equal
 		if (compareValue != 0) {

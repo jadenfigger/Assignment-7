@@ -9,7 +9,7 @@ public class Sorts {
 			int end) {
 		if (start < end) {
 			// System.out.println("Before: " + start + ":" + end + " | " +
-					// reviewList.toString());
+			// reviewList.toString());
 			int p = partition(reviewList, xComparator, start, end);
 			// System.out.println("After p1: p=" + p + " | " + reviewList.toString());
 			quickSort(reviewList, xComparator, start, p - 1);

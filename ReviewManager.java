@@ -87,6 +87,10 @@ public class ReviewManager implements Serializable {
         Sorts.sort(reviewList, new ReviewRatingComparator());
     }
 
+    public void sortByGenre() {
+        Sorts.sort(reviewList, new ReviewMovieGenreComparator());
+    }
+
     // lists out all the reviews in review list
     public String listReviews() {
         String result = "";
